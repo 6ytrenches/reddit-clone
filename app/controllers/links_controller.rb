@@ -1,3 +1,6 @@
+require 'alchemyapi'
+require 'net/http'
+
 class LinksController < ApplicationController
   before_action :set_link, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:index, :show]
@@ -10,8 +13,125 @@ class LinksController < ApplicationController
   # GET /links/1
   # GET /links/1.json
   def show
+    url = Link.find(params[:id]).url
+    html =  Net::HTTP.get(URI(url))
+    alchemyapi = AlchemyAPI.new()
+@responseText = alchemyapi.text('url', url)
+
+ @responseText = alchemyapi.text('url', url)
+if @responseText['status'] == 'OK'
+  puts '## Response Object ##'
+  p @testJsonText = JSON.pretty_generate(@responseText)
+  puts ''
+  puts '## Extracted Text ##'
+  p @Texttext = 'text: ' + @responseText['text']
+  puts ''
+else
+  puts 'Error in text extraction call: ' + @responseText['statusInfo']
+end
+
+#################
+
+
+    
+    @responseEntities = alchemyapi.entities('text', @Texttext, { 'sentiment'=>1 })
+    @testJsonEntities = JSON.pretty_generate(@responseEntities)
+
+
+    @responseConcepts = alchemyapi.concepts('text', @Texttext)
+    @testJsonConcepts = JSON.pretty_generate(@responseConcepts)
+
+
+puts 'Processing html: ' 
+puts ''
+  @responseSentiment = alchemyapi.sentiment('html', html)
+if @responseSentiment['status'] == 'OK'
+  puts '## Response Object ##'
+@testJsonSentiment = JSON.pretty_generate(@responseSentiment)
+  puts ''
+  puts '## Document Sentiment ##'
+  @sentiment_type = 'type: ' + @responseSentiment['docSentiment']['type']
+  #Make sure score exists (it's not returned for neutral sentiment
+  if @responseSentiment['docSentiment'].key?('score')
+  @sentiment_score = 'score: ' + @responseSentiment['docSentiment']['score']
+  end
+else
+  puts 'Error in sentiment analysis call: ' + @responseSentiment['statusInfo']
+end
+
+
+
+
+    # @responseSentimentTargeted = alchemyapi.sentiment_targeted('text', @responseSentiment, 'dev'  )
+    # @testJsonSentimentTargeted = JSON.pretty_generate(@responseSentimentTargeted)
+    # @final_targeted_sentiment = @responseSentimentTargeted['docSentiment']['type']
+
+    @responseAuthor = alchemyapi.author('url', url)
+    @testJsonAuthor = JSON.pretty_generate(@responseAuthor)
+
+    @responseLanguage = alchemyapi.language('text', @Texttext)
+    @testresponseLanguage = JSON.pretty_generate(@responseLanguage)
+
+    @responseTitle = alchemyapi.title('url', url)
+    @testJsonTitle = JSON.pretty_generate(@responseTitle)
+
+
+    @responseRelations = alchemyapi.relations('text', @Texttext)
+    @testJsonRelations = JSON.pretty_generate(@responseRelations)
+
+    @responseCategory = alchemyapi.category('text',@Texttext)
+    @testJsonCategory = JSON.pretty_generate(@responseCategory)
+
+
+    @responseFeed = alchemyapi.feeds('url', url)
+    @testJsonFeed = JSON.pretty_generate( @responseFeed)
+
+    @responseMicroformat = alchemyapi.microformats('url', url)
+    @testJsonMicroformat = JSON.pretty_generate(@responseMicroformat)
+
+
+    @responseTaxonomy = alchemyapi.taxonomy('url', url)
+    @testJsonTaxonomy = JSON.pretty_generate(@responseTaxonomy)
+
+    @responseImag = alchemyapi.image_extract('url', url, { 'extractMode'=>'trust-metadata' })
+    @testJsonImg = JSON.pretty_generate(@responseImag)
+
+
+    @responseCombined = alchemyapi.combined('url', url, { 'extract'=>'page-image,keyword,entity' })
+    @testJsonCombined = JSON.pretty_generate(@responseCombined)
+
+    @responseImage_tag = alchemyapi.image_tag('url', url, { 'extractMode'=>'trust-metadata' })
+    @testJsonImage_tag = JSON.pretty_generate(@responseImage_tag)
+
+
+@responseKeyword = alchemyapi.keywords('text', @Texttext, { 'sentiment'=>1 })
+
+  if @responseKeyword['status'] == 'OK'
+  @object = '## Response Object ##'
+  @testJsonKey = JSON.pretty_generate(@responseKeyword)
+
+  @string = ''
+  puts '## Keywords ##'
+  for keyword in @responseKeyword['keywords']
+    @text = 'text: ' + keyword['text']
+    @relevance = 'relevance: ' + keyword['relevance']
+    @sentiment = 'sentiment: ' + keyword['sentiment']['type'] 
+    
+
+    #Make sure score exists (it's not returned for neutral sentiment
+    if keyword['sentiment'].key?('score')
+      print ' (' + keyword['sentiment']['score'] + ')'
+    end
+    puts ''
+  end
+else
+  puts 'Error in keyword extraction call: ' + @responseKeyword['statusInfo']
+end
   end
 
+######################################################################################
+######################################################################################
+######################################################################################
   # GET /links/new
   def new
     @link = current_user.links.build
@@ -24,6 +144,7 @@ class LinksController < ApplicationController
   # POST /links
   # POST /links.json
   def create
+
     @link = current_user.links.build(link_params)
 
     respond_to do |format|
