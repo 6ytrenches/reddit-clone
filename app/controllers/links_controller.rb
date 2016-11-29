@@ -36,7 +36,7 @@ end
     
     @responseEntities = alchemyapi.entities('text', @Texttext, { 'sentiment'=>1 })
     @testJsonEntities = JSON.pretty_generate(@responseEntities)
-
+    @data = @responseEntities.linkedData  
 
     @responseConcepts = alchemyapi.concepts('text', @Texttext)
     @testJsonConcepts = JSON.pretty_generate(@responseConcepts)

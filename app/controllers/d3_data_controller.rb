@@ -27,7 +27,7 @@ def d3_data
 #  @responseEntities = alchemyapi.entities('text', @Texttext, { 'sentiment'=>1 })
 #   @testJsonEntities = JSON.pretty_generate(@responseEntities)
 
-  @responseCombined = alchemyapi.combined('url', url, { 'extract'=>'page-image,keyword,entity' })
+ @responseCombined = alchemyapi.combined('url', url, { 'extract'=>'page-image,keyword,entity' })
   @testJsonCombined = JSON.pretty_generate(@responseCombined)
   render(json: @testJsonCombined)
 
