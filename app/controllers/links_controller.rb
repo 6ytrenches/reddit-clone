@@ -182,6 +182,27 @@ end
     end
   end
 
+  # Analyze uses Alchemy API to identify all entities within a given link's (/analyze/:id) content and format the data appropriately
+  def analyze
+    @link         = Link.find(params[:id])
+   # html          =  Net::HTTP.get(URI())
+    alchemyapi   = AlchemyAPI.new()
+    responseText = alchemyapi.text('url', @link.url)
+
+# format the entities data into:
+
+# {
+#   type: "Person",
+#   title: "Jeff Fisher",
+#   relevance: 0.79562,
+#   score: -0.383586,
+#   count: 4
+# }
+
+    @data = alchemyapi.entities('text', responseText, { 'sentiment'=>1 })["entities"].select{|c| c["sentiment"]["score"] }.map{|c| { type: c["type"], title: c["text"], relevance: sprintf('%.2f',c["relevance"]), score: c["sentiment"]["score"].to_f.round(1), count: c["count"].to_i } }.sort_by {|c| -c[:score] }
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_link
