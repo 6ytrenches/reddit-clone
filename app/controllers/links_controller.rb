@@ -206,11 +206,19 @@ end
 # }
   @responseTaxonomy = alchemyapi.taxonomy('url', @link.url)["taxonomy"].select{|c| c["label"]}.map{|c| {type: c["label"], score: c["score"].to_f.round(1) } }
     @testJsonTaxonomy = JSON.pretty_generate(@responseTaxonomy)
-
-    
-
   end
 
+  def upvote
+    @link = Link.find(params[:id])
+    @link.upvote_by current_user
+    redirect_to :back
+  end
+
+  def downvote
+    @link = Link.find(params[:id])
+    @link.downvote_from current_user
+    redirect_to :back
+  end
 
 
 

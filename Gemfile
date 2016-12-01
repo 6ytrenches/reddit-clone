@@ -1,5 +1,10 @@
 source 'https://rubygems.org'
-
+gem 'record_tag_helper', '~> 1.0'
+#
+gem 'simple_form', '~> 3.2', '>= 3.2.1'
+#
+gem 'acts_as_votable', '~> 0.10.0'
+#
 gem "watson-api-client"
 #
 gem "json"
