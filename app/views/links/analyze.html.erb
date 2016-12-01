@@ -1,0 +1,65 @@
+ 
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+
+
+
+
+
+
+  <h3>Data:</h3>
+
+<!-- In JavaScript, we can map the data as follows: 
+data.entities.map( c => ({ type: c.type, title: c.text, relevance: c.relevance, score: c.sentiment.score, count: c.count }) )
+...instead, we'll do this on the back end in the contholler
+-->
+
+<h3>Analysis of Entities mentioned in <%= @link.title %></h3>
+
+<table>
+<tr>
+  <th>#</th>
+  <th>Type</th>
+  <th>Title</th>
+  <th>Relevance </th>
+  <th>Score</th>
+<!--   <th>Count</th><br>
+  <th>Subtype</th><br>
+  <th>Website</th> -->
+
+</tr>
+<% @data.each_with_index do |entity,index|  %>
+<tr>
+  <td><%= index+1 %></td>
+  <td><%= entity[:type] %></td>
+  <td><%= entity[:title] %></td>
+  <td><%= entity[:relevance] %></td>
+  <td><%= entity[:score] %></td>
+  <td><%#= entity[:count] %></td>
+  <td><%#= entity[:subtype] %></td>
+   <td><%#= entity[:website] %></td>
+   <td><%#= entity[:dbpedia] %></td>
+</tr>
+<% end %>
+</table>
+
+<table>
+<h3>Taxonomy of Entities mentioned in <%= @link.title %></h3>
+<tr>
+  <th>#</th>
+  <th>Type</th>
+  <th>Score</th>
+</tr>
+
+<% @responseTaxonomy.each_with_index do |tax, index| %>
+<tr>
+  <td><%= index+1 %></td>
+  <td><%= tax[:type] %></td>
+  <td><%= tax[:score] %></td>
+  </tr>
+  <% end %>
+</table>
+ 
+
+<%#= @data %>
+<%#= @responseTaxonomy %>

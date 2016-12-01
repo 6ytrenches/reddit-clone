@@ -36,7 +36,6 @@ end
     
     @responseEntities = alchemyapi.entities('text', @Texttext, { 'sentiment'=>1 })
     @testJsonEntities = JSON.pretty_generate(@responseEntities)
-    @data = @responseEntities.linkedData  
 
     @responseConcepts = alchemyapi.concepts('text', @Texttext)
     @testJsonConcepts = JSON.pretty_generate(@responseConcepts)
@@ -127,6 +126,12 @@ end
 else
   puts 'Error in keyword extraction call: ' + @responseKeyword['statusInfo']
 end
+
+
+
+
+
+
   end
 
 ######################################################################################
@@ -181,6 +186,33 @@ end
       format.json { head :no_content }
     end
   end
+
+  def analyze
+    @link = Link.find(params[:id])
+    #html =  Net::HTTP.get(URI(url))
+    alchemyapi   = AlchemyAPI.new()
+    responseText = alchemyapi.text('url', @link.url)
+
+@data = alchemyapi.entities('text', responseText, { 'sentiment'=>1 })["entities"].select{|c| c["sentiment"]["score"] }.map{|c| { type: c["type"], title: c["text"], subtype: c["disambiguated"] ? c["disambiguated"]["subType"] : "", website: c["disambiguated"] ? c["disambiguated"]["website"] : "", dbpedia: c["disambiguated"] ? c["disambiguated"]["dbpedia"] : "", relevance: sprintf('%.2f',c["relevance"]), score: c["sentiment"]["score"].to_f.round(1), count: c["count"].to_i } }.sort_by {|c| -c[:score] }
+
+# format the entities data into:
+
+# {
+#   type: "Person",
+#   title: "Jeff Fisher",
+#   relevance: 0.79562,
+#   score: -0.383586,
+#   count: 4
+# }
+  @responseTaxonomy = alchemyapi.taxonomy('url', @link.url)["taxonomy"].select{|c| c["label"]}.map{|c| {type: c["label"], score: c["score"].to_f.round(1) } }
+    @testJsonTaxonomy = JSON.pretty_generate(@responseTaxonomy)
+
+    
+
+  end
+
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
