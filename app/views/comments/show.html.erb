@@ -12,8 +12,81 @@
 
 <p>
   <strong>User:</strong>
-  <%= @comment.user %>
+  <%= @comment.user.email %>
 </p>
 
+<!-- <pre>
+ --><%#= @testJsonTaxonomy  %>
+<!-- <pre> -->
+
+<table>
+<tr>
+  <th>#</th>
+  <th>Type</th>
+  <th>Title</th>
+  <th>Relevance </th>
+  <th>Score</th>
+<!--   <th>Count</th><br>
+  <th>Subtype</th><br>
+  <th>Website</th> -->
+
+</tr>
+<% @text.each_with_index do |entity,index|  %>
+<tr>
+  <td><a class="trigger-modal" data-toggle="modal" data-target="#myModal"><%= index+1 %></a></td>
+  <td><%= entity[:type] %></td>
+  <td><%= entity[:title] %></td>
+  <td><%= entity[:relevance] %></td>
+  <td><%= entity[:score] %></td>
+  <td><%#= entity[:count] %></td>
+  <td><%#= entity[:subtype] %></td>
+   <td><%#= entity[:website] %></td>
+   <td><%#= entity[:dbpedia] %></td>
+</tr>
+<% end  %>
+</table>
+
+
+<% @text.each_with_index do |entity,index|  %>
+    <div id="data_<%= index+1 %>" style="display:none;">
+    <h3>Count</h3>
+    <li><%= entity[:count] %></li>
+    <h3>Subtype</h3>
+    <li><%= entity[:subtype] %></li>
+    <h3>Website</h3>
+    <li><%= entity[:website] %></li>
+    <li><%= entity[:dbpedia] %></li>
+</div>
+<% end %>
+
+
+
+ 
+ <!-- Button trigger modal -->
+<a type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="display:none;">
+  Launch demo modal
+</a>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%#= @text %>
 <%= link_to 'Edit', edit_comment_path(@comment) %> |
 <%= link_to 'Back', comments_path %>

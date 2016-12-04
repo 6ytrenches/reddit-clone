@@ -9,9 +9,18 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
+
+$(document).ready(function(){
+  $('.trigger-modal').click(function(e){
+    console.log(e.target.innerHTML);
+    $("#myModal .modal-body").html( $('#data_' + e.target.innerHTML).html() );
+  });
+  // $('#myModal').on('show.bs.modal', function (e) {
+  //   //$('#myInput').focus()
+  //   console.log("showing...",e);
+  // });
+});

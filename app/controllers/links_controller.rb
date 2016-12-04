@@ -206,6 +206,11 @@ end
 # }
   @responseTaxonomy = alchemyapi.taxonomy('url', @link.url)["taxonomy"].select{|c| c["label"]}.map{|c| {type: c["label"], score: c["score"].to_f.round(1) } }
     @testJsonTaxonomy = JSON.pretty_generate(@responseTaxonomy)
+
+  respond_to do |format|
+    format.html
+    format.js
+  end 
   end
 
   def upvote

@@ -1,6 +1,27 @@
+require 'alchemyapi'
+require 'net/http'
+
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!
+
+
+  def show
+  # @link  = Link.find(params[:link_id])
+  @comment = Comment.find(params[:id])
+  @newcomm = @comment.body
+  p "kbhjkjkb"
+  p @comment.body
+  p "hjbhjbhjbhj"
+  alchemyapi   = AlchemyAPI.new()
+  @text = alchemyapi.entities('text', @newcomm, { 'sentiment'=>1  })
+  @text = alchemyapi.entities('text', @newcomm, { 'sentiment'=>1 })["entities"].select{|c| c["sentiment"] }.map{|c| { type: c["type"], title: c["text"], subtype: c["disambiguated"] ? c["disambiguated"]["subType"] : "", website: c["disambiguated"] ? c["disambiguated"]["website"] : "", dbpedia: c["disambiguated"] ? c["disambiguated"]["dbpedia"] : "", relevance: sprintf('%.2f',c["relevance"]), score: c["sentiment"]["score"].to_f.round(1), count: c["count"].to_i } }.sort_by {|c| -c[:score] }
+  @testJsonTaxonomy = JSON.pretty_generate(@text)
+
+  p params
+  # @text = alchemyapi.text('text', @comment)
+
+  end 
 
   def create
     @link = Link.find(params[:link_id])
