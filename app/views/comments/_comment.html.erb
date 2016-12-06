@@ -9,6 +9,7 @@
       <% if comment.user == current_user -%>
         <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-default" %>
       <% end %>
+      <%= link_to "Details", analyze_comment_path(comment)  %>
     </div>
   </div>
 <% end %>

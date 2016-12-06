@@ -1,7 +1,8 @@
 <div class="page-header">
+<%= image_tag(@responseImage_tag["url"], size: "500x600") %>
+
   <h1><a href="<%= @link.url %>"><%= @link.title %></a><br> <small>Submitted by <%= @link.user.name %></small></h1>
 </div>
-
 <div class="btn-group">
   <%= link_to 'Visit URL', @link.url, class: "btn btn-primary" %>
 </div>
@@ -40,6 +41,12 @@
   <br>
   <%= f.submit "Add Comment", class: "btn btn-primary" %>
 <% end %>
+
+knowing a image
+<pre>
+  <%= @testJsonImage_tag %>
+</pre>
+
 
 
 entitites 
@@ -80,7 +87,7 @@ sentiment targeted
 
 full text
 <pre>
-<%= @testJsonText %>
+<%#= @testJsonText %>
 <%= @Texttext %>
 </pre>
 
@@ -136,16 +143,6 @@ combined
 <pre>
   <%= @testJsonCombined %>
 </pre>
-
-knowing a image
-<pre>
-  <%= @testJsonImage_tag %>
-</pre>
-
-
-
-
-
 
 
 

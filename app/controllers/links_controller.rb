@@ -102,6 +102,10 @@ end
     @responseImage_tag = alchemyapi.image_tag('url', url, { 'extractMode'=>'trust-metadata' })
     @testJsonImage_tag = JSON.pretty_generate(@responseImage_tag)
 
+   
+p 'ksksks'
+p #@responseImage_tag.body
+p 'ksksks'
 
 @responseKeyword = alchemyapi.keywords('text', @Texttext, { 'sentiment'=>1 })
 
@@ -126,9 +130,6 @@ end
 else
   puts 'Error in keyword extraction call: ' + @responseKeyword['statusInfo']
 end
-
-
-
 
 
 
@@ -193,7 +194,7 @@ end
     alchemyapi   = AlchemyAPI.new()
     responseText = alchemyapi.text('url', @link.url)
 
-@data = alchemyapi.entities('text', responseText, { 'sentiment'=>1 })["entities"].select{|c| c["sentiment"]["score"] }.map{|c| { type: c["type"], title: c["text"], subtype: c["disambiguated"] ? c["disambiguated"]["subType"] : "", website: c["disambiguated"] ? c["disambiguated"]["website"] : "", dbpedia: c["disambiguated"] ? c["disambiguated"]["dbpedia"] : "", relevance: sprintf('%.2f',c["relevance"]), score: c["sentiment"]["score"].to_f.round(1), count: c["count"].to_i } }.sort_by {|c| -c[:score] }
+@data = alchemyapi.entities('text', responseText, { 'sentiment'=>1 })["entities"].select{|c| c["sentiment"] }.map{|c| { type: c["type"], title: c["text"], subtype: c["disambiguated"] ? c["disambiguated"]["subType"] : "", website: c["disambiguated"] ? c["disambiguated"]["website"] : "", dbpedia: c["disambiguated"] ? c["disambiguated"]["dbpedia"] : "",freebase: c["disambiguated"] ? c["disambiguated"]["freebase"] : "",yago: c["disambiguated"] ? c["disambiguated"]["yago"] : "", relevance: sprintf('%.2f',c["relevance"]), score: c["sentiment"]["score"].to_f.round(1), count: c["count"].to_i } }.sort_by {|c| -c[:score] }
 
 # format the entities data into:
 
@@ -206,6 +207,9 @@ end
 # }
   @responseTaxonomy = alchemyapi.taxonomy('url', @link.url)["taxonomy"].select{|c| c["label"]}.map{|c| {type: c["label"], score: c["score"].to_f.round(1) } }
     @testJsonTaxonomy = JSON.pretty_generate(@responseTaxonomy)
+
+
+
 
   respond_to do |format|
     format.html
