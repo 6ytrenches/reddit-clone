@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+
+gem 'betaface'
+#
 gem 'record_tag_helper', '~> 1.0'
 #
 gem 'simple_form', '~> 3.2', '>= 3.2.1'

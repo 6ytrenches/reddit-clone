@@ -1,5 +1,9 @@
 require 'alchemyapi'
 require 'net/http'
+require 'betaface'
+api = Betaface::Api.new("d45fd466-51e2-4701-8da8-04351c872236","171e8465-f548-401d-b63b-caf0dc28df5f")
+
+
 
 class LinksController < ApplicationController
   before_action :set_link, only: [:show, :edit, :update, :destroy]
@@ -130,8 +134,12 @@ p 'ksksks'
 else
   puts 'Error in keyword extraction call: ' + @responseKeyword['statusInfo']
 end
+p '12345678'
+ p img = @responseImage_tag["url"]
 
-
+api = Betaface::Api.new("d45fd466-51e2-4701-8da8-04351c872236","171e8465-f548-401d-b63b-caf0dc28df5f")
+api.upload_image("propoints,classifiers",{url: img})
+p api.get_image_info("2bdcd1ad-47a6-45f8-ba74-86c765272422")
 
   end
 
