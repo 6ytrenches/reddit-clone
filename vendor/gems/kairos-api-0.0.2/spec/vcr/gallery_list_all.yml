@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://api.kairos.io/gallery/list_all
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+      Content-Type:
+      - application/x-www-form-urlencoded
+      App-Id:
+      - abc1234
+      App-Key:
+      - asdfadsfasdfasdfasdf
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - ngx_openresty/1.2.8.6
+      Date:
+      - Sun, 20 Jul 2014 03:33:23 GMT
+      Content-Type:
+      - text/html; charset=UTF-8
+      Content-Length:
+      - '81'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "{\n\t\"time\": 0.00808,\n\t\"status\": \"Complete\",\n\t\"gallery_ids\":
+        [\n\t\t\"testgallery\"\n\t]\n}"
+    http_version: 
+  recorded_at: Sun, 20 Jul 2014 03:33:12 GMT
+recorded_with: VCR 2.9.2

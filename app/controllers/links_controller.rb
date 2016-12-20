@@ -1,7 +1,9 @@
 require 'alchemyapi'
 require 'net/http'
-require 'betaface'
-api = Betaface::Api.new("d45fd466-51e2-4701-8da8-04351c872236","171e8465-f548-401d-b63b-caf0dc28df5f")
+require 'kairos'
+#require 'face'
+#require 'betaface'
+#api = Betaface::Api.new("d45fd466-51e2-4701-8da8-04351c872236","171e8465-f548-401d-b63b-caf0dc28df5f")
 
 
 
@@ -105,8 +107,7 @@ end
 
     @responseImage_tag = alchemyapi.image_tag('url', url, { 'extractMode'=>'trust-metadata' })
     @testJsonImage_tag = JSON.pretty_generate(@responseImage_tag)
-
-   
+   @face = @responseImage_tag["url"]
 p 'ksksks'
 p #@responseImage_tag.body
 p 'ksksks'
@@ -134,14 +135,37 @@ p 'ksksks'
 else
   puts 'Error in keyword extraction call: ' + @responseKeyword['statusInfo']
 end
-p '12345678'
-p img = @responseImage_tag["url"]
-api = Betaface::Api.new("d45fd466-51e2-4701-8da8-04351c872236","171e8465-f548-401d-b63b-caf0dc28df5f")
-p urlimg = api.upload_image("propoints,classifiers",{url: img})
-p"12345"
-p img_id = urlimg["img_uid"]
-p"cec"
-p api.get_image_info(img_id)
+
+client = Kairos::Client.new(:app_id => '', :app_key => '')
+p client.enroll(:url => @face, :subject_id => 'gemtest', :gallery_name => 'testgallery')
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+
+# client = Face.get_client(api_key: '' , api_secret: '')
+# p "jndk"
+# p client.faces_detect(urls: [@face])
+# p'jkwxjksw'
+# p client.faces_detect(urls: [@face],  attributes: 'all')
+# p b['photos'][0]['tags'][0]['uids'].push('tom')
+
+
+######################################################################################################
+#######################################################################################################
+########################################################################################################
+# p '12345678'
+# p img = @responseImage_tag["url"]
+# api = Betaface::Api.new("","")
+# p urlimg = api.upload_image("propoints,classifiers",{url: img})
+# p"12345"
+# p img_id = urlimg["img_uid"]
+# p"cec"
+# p @img_info = api.get_image_info("#{img_id}")
+
+
+
+# p api.upload_image("propoints,classifiers",{url:"http://ell.h-cdn.co/assets/cm/15/02/54aabfd2152df_-_e-christopher-reeve-movember-hot-men-with-mustaches-xln-xln.jpg"})
+# p api.get_image_info("682c8c96-3779-420e-b458-bb2049a52743")
 
   end
 

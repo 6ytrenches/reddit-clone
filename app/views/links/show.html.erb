@@ -1,6 +1,10 @@
 <div class="page-header">
-<%= image_tag(@responseImage_tag["url"], size: "500x600") %>
 
+
+<%= image_tag(@responseImage_tag["url"], size: "500x600") %>
+<%#= content_tag :div, id: "bimg", data: {} %>
+
+<div id="polling"><%= @img_info %></div>
   <h1><a href="<%= @link.url %>"><%= @link.title %></a><br> <small>Submitted by <%= @link.user.name %></small></h1>
 </div>
 <div class="btn-group">

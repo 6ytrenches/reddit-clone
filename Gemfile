@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
-
-gem 'betaface'
+gem 'kairos-api', :path => "vendor/gems/kairos-api-0.0.2"
+#gem 'face'
+#gem 'betaface'
 #
 gem 'record_tag_helper', '~> 1.0'
 #
