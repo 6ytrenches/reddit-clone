@@ -39,7 +39,7 @@ end
 #################
 
 
-    
+
     @responseEntities = alchemyapi.entities('text', @Texttext, { 'sentiment'=>1 })
     @testJsonEntities = JSON.pretty_generate(@responseEntities)
 
@@ -47,7 +47,7 @@ end
     @testJsonConcepts = JSON.pretty_generate(@responseConcepts)
 
 
-puts 'Processing html: ' 
+puts 'Processing html: '
 puts ''
   @responseSentiment = alchemyapi.sentiment('html', html)
 if @responseSentiment['status'] == 'OK'
@@ -123,8 +123,8 @@ p 'ksksks'
   for keyword in @responseKeyword['keywords']
     @text = 'text: ' + keyword['text']
     @relevance = 'relevance: ' + keyword['relevance']
-    @sentiment = 'sentiment: ' + keyword['sentiment']['type'] 
-    
+    @sentiment = 'sentiment: ' + keyword['sentiment']['type']
+
 
     #Make sure score exists (it's not returned for neutral sentiment
     if keyword['sentiment'].key?('score')
@@ -248,7 +248,7 @@ p client.enroll(:url => @face, :subject_id => 'gemtest', :gallery_name => 'testg
   respond_to do |format|
     format.html
     format.js
-  end 
+  end
   end
 
   def upvote
