@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+
+gem "paperclip", "~> 5.0.0"
+
 gem 'kairos-api', :path => "vendor/gems/kairos-api-0.0.2"
 #gem 'face'
 #gem 'betaface'
