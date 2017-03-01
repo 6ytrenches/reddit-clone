@@ -1,24 +1,29 @@
-# README
+# REDX
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app is a Reddit clone that uses IBM Watson for data mining.
 
-Things you may want to cover:
+Things you need:
 
-* Ruby version
+* Read Alchemy API Document [AlchemyAPI Document](https://www.ibm.com/watson/developercloud/doc/index.html).
 
-* System dependencies
+* IBM Bluemix Alchemy API key [sign up for key](https://console.ng.bluemix.net/registration/?target=/catalog/%3fcategory=watson)
 
-* Configuration
+The following are AlchemyAPI API's:
 
-* Database creation
+* Author Extraction
+* Combined Call
+* Concept Tagging
+* Entity Extraction
+* Face Detection/Recognition
+* Image Tagging
+* Keyword Extraction
+* Language Detection
+* Relation Extraction
+* Sentiment Analysis
+* Targeted Sentiment Analysis
+* Taxonomy
+* Text Categorization
+* Text Extraction
+* Title Extraction
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The specs are expecting your API Key to be in ALCHEMY_API_KEY.txt
